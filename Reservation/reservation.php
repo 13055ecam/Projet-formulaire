@@ -16,8 +16,7 @@
 				<input type="text" name="place" /> </p>
 				<p> Assurance annulation
 				<input type="checkbox" name="annulation" id="case" /><label for ="case"> </label></p>
-				<input type="submit" value= "next" />
-				<input type="submit" value= "cancel" />
+				<input type="submit" name ="Next" value= "Next" />
 				</form>
         	</p>
 		</form>
