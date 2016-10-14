@@ -3,6 +3,8 @@
 <html>
     <head>
         <title>exo3</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+
     </head>
     <body>
         <p>
@@ -10,24 +12,28 @@
         <p> Le prix de la place est de 10 € jusqu'à 12 ans et ensuite de 15 ans.</p>
         <p> Le prix d'assurance annulation est de 20 ans quels que soit le nombre de voyageurs. </p>
         <form method ="post" action="cible.php">
+        	<form method ="post" action="cible.php">
         	<p>Destination : 
 				<input type="text" name="destination" /> </p>
 				<p>Nombre de places : 
 				<input type="text" name="place" /> </p>
 				<p> Assurance annulation
-				<input type="checkbox" name="annulation" id="case" /> <label for ="case"> </label> </p>
+				<input type="checkbox" name="annulation" id="case" /><label for ="case"> </label></p>
 				<input type="submit" value= "Etape suivante" />
 				<input type="submit" value= "Annuler la réservation" />
 				</form>
         	</p>
-			//
-			<?php 
+		</form>
+        	</p>
+        	<!--
+			<?php
 			include_once('Reservation.class.php');
-			
         	$reservation = new Reservation(32);
         	$reservation ->set_destination("Londres");
         	$reservation ->get_destination() . "woaw";
+        	
         	?>
+        	--!>
 
     </body>
 </html>
