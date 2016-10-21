@@ -39,7 +39,6 @@ function test_input($data) {
 ?>
         <p>
         <H1> Détail Reservation </H1>
-<<<<<<< HEAD
         <form method ="post" action="<?php echo CFG_FORM_ACTION; ?>?stage=<?php echo CFG_STAGE_ID+1; ?>">
         Nom : 
         <input type="text" name="nom" value="<?php echo $nom;?>"/> </p>
@@ -52,20 +51,6 @@ function test_input($data) {
 				<input type="submit" name ="Next" value= "Retour" />
                 <input type="submit" name ="Next1" value= "Suivant" />
 				<input type="submit" name ="Cancel" value= "Annuler" />
-=======
-        <form method ="post">
-        		<p>Nom : 
-				<input type="text" name="nom" /> </p>
-				<p>Age : 
-				<input type="text" name="age" /> </p>
-				<p>Nom : 
-				<input type="text" name="nom1" /> </p>
-				<p>Age : 
-				<input type="text" name="age1" /> </p>
-				<input type="submit" value= "Next" />
-				<input type="submit" value= "Cancel" />
-				<input type="submit" value= "Return" />
->>>>>>> 1d7acb4ecc54407c1cf31c0715d2f4a8ce1e61c1
 				</form>
         	</p>
     </body>

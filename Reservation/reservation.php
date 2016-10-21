@@ -44,33 +44,24 @@ function test_input($data) {
         <H1> Reservation </H1>
         <p> Le prix de la place est de 10 € jusqu'à 12 ans et ensuite de 15 ans.</p>
         <p> Le prix d'assurance annulation est de 20 ans quels que soit le nombre de voyageurs. </p>
-<<<<<<< HEAD
+                <p><span class="error">* required field.</span></p>
+
           <form method ="post" action="<?php echo CFG_FORM_ACTION; ?>?stage=<?php echo CFG_STAGE_ID+1; ?>">
           Destination : 
         <input type="text" name="destination" value="<?php echo $destination;?>"/>
+        <span class="error">* <?php echo $destinationErr;?></span>
                 <br><br>
         Nombre de places : 
         <input type="text" name="place"  value="<?php echo $place;?>" />
+        <span class="error">* <?php echo $placeErr;?></span>
                 <br><br>
             Assurance annulation:
   <input type="checkbox" name="assurance" <?php if (isset($assurance) && $assurance=="oui") echo "oui";?> value="oui">oui
+  <span class="error">* <?php echo $assuranceErr;?></span>
         <br><br>
         <input type="submit" name ="Next" value= "suivant"/>
         <input type="submit" name ="Cancel" value= "Annuler"
         </form>
-=======
-        	<form method ="post">
-        	<p>Destination : 
-				<input type="text" name="destination" /> </p>
-				<p>Nombre de places : 
-				<input type="text" name="place" /> </p>
-				<p> Assurance annulation
-				<input type="checkbox" name="annulation" id="case" /><label for ="case"> </label></p>
-				<input type="submit" name ="Next" value= "Next" />
-				</form>
-        	</p>
-		</form>
->>>>>>> 1d7acb4ecc54407c1cf31c0715d2f4a8ce1e61c1
     </body>
 </html>
 
