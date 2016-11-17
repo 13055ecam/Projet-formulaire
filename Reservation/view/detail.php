@@ -10,9 +10,8 @@ error_reporting(0);
 
     </head>
     <body>
-        <center> 
+        <p>
         <H1> Détail Reservation </H1>
-        </center>
         <form method ="post" action= "index.php">
         <?php 
                 for($i = 0; $i < $reservation->getNbr_places(); $i++) {
@@ -20,19 +19,20 @@ error_reporting(0);
                         <p>
                         <span class="error">* '.$nomErr.'</span><br><br>
                         Nom : 
-                        <input type= "text" name="names" value= "'.$reservation->getName().'"><br><br>
+                        <input type= "text" name="names" value= "'.$reservation->getName()[$i].'"><br><br>
                         <span class="error">* '.$ageErr.'</span>
                         <br><br>
                         Age :
-                        <input type= "text" name="ages" value= "'.$reservation->getAge().'" /><br><br>
+                        <input type= "text" name="ages" value= "'.$reservation->getAge()[$i].'" /><br><br>
                         </p>';
                        }
             ?>
                   <br/><br/>
   				        <input type="submit" name ="validation" value= "Etape suivante" />
                   <input type="submit" name ="returntoreservation" value= "Retour à la page précédente" />
-  				        <input type="submit" name ="Cancel" value= "Annuler la réservation" />
+  				        <input type="submit" name ="Cancel" value= "Annuler" />
   			</form>
+    </p>
   </body>
 </html>
 

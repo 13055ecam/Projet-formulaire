@@ -1,38 +1,63 @@
 <?php
-	session_start();
-	define('CFG_FORM_ACTION', basename(__FILE__)); // Cela permet de changer le nom du script d'index
-$forms = array( // Voici la liste des formulaires, pratique pour mettre en place le menu de navigation
-    1 => 'reservation',
-    2 => 'detail',
-    3 => 'resume',
-    4 => "annulation",
-    );
-if(empty($_GET['stage']) or !is_numeric($_GET['stage']))
-{
-    define('CFG_STAGE_ID', 0);
-}
+include ('model.php');
+session_start();
+#Recuperation of a session
+if (isset($_SESSION["reservation"])&& !empty($_SESSION['reservation'])) {
+    $reservation = unserialize($_SESSION['reservation']);
+  } 
 else
+  {
+    $reservation = new Reservation();
+  }
+//Page 1 : Entre la destination, le nombre de client et l'assurance puis on va à la page 2. 
+if(!empty($_POST['Send']) && empty($_POST['Cancel']) && !empty($_POST["destination"]) && !empty($_POST['nbr_places']))
 {
-    // En situation réelle, il faudrait vérifier l'existence de cette page
-    define('CFG_STAGE_ID', intval($_GET['stage']));
+  $reservation->setDestination($_POST['destination']);
+  $reservation->setNbr_places($_POST['nbr_places']);
+   if (isset($_POST['assurance']))
+  {
+    $reservation->setCheckbox('checked');
+  }
+  else
+  {
+    $reservation->setCheckbox('');
+  }
+  include("detail.php");
 }
-	switch(CFG_STAGE_ID){
-		case 0:
-			require('reservation.php');
-		break;
-		case 1:
-			require('detail.php');
-			$_SESSION['destination'] = $_POST['destination'];
-    	$_SESSION['place'] = $_POST['place'];
-		$_SESSION['assurance'] = $_POST['assurance'];
-    		break;
-		case 2:
-			require('resume.php');
-			$_SESSION['nom'] = $_POST['nom'];
-    		$_SESSION['age'] = $_POST['age'];
-			break;
-		case 3:
-			require('annulation.php');
-		break;
-		}
-  ?>
+//Retour à la première page 
+
+if (!empty($_POST["returntoreservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
+  {
+    include("reservation.php");
+  }
+// Entre les noms et les ages pour chaque personne et on va à la troisième page 
+if (isset($_POST["validation"]) && !empty($_POST["validation"]) && empty($_POST['returntoreservation']) && empty($_POST['Cancel']))
+  {
+  $reservation->setAge($_POST['ages']);
+  $reservation->setName($_POST['names']);
+  include("resume.php");
+  }
+if (isset($_POST["returntodetail"])) 
+  {
+  include ("detail.php");
+  }
+// Annulation de la réservation, on détruit la session
+if (!empty($_POST["Cancel"]) && isset($_POST["Cancel"]))
+  {
+    session_destroy();
+    unset($reservation);
+    include("reservation.php");
+  }
+if (!empty($_POST["check"]) && empty($_POST["Cancel"])&& empty($_POST["returntodetail"]))
+  {
+  include("confirmation.php");
+  }
+if (isset($reservation))
+{
+  $_SESSION['reservation'] = serialize($reservation);
+}
+if(empty($_POST['nbr_places']) && empty($_POST["destination"]) && empty($_POST['nbr_places']) && empty($_POST["Send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["Cancel"]) && empty ($_POST["returntodetail"]))
+  {
+    include("reservation.php");
+  }
+?>
