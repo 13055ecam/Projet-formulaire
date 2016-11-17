@@ -1,3 +1,8 @@
+html {
+color:black;
+background-image:url(image1.png);
+}
+
 form {
     /* Pour le centrer dans la page */
     margin: 0 auto;
@@ -12,6 +17,9 @@ table, th, td {
     border-collapse: collapse;
 }
 
+form, div {
+    background-color:#16BBD8;
+}
 div {
     width : 500px;
     margin-left: auto;

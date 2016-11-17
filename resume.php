@@ -1,4 +1,6 @@
-
+<?php
+error_reporting(0);
+?>
 <html>
       <head>
           <title>Reservation</title>
@@ -10,36 +12,34 @@
 
           <h1>VALIDATION DES RESERVATIONS</h1>
 
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <form method='post' action='index.php'>
             <table>
                 <tr>
                   <td>Destination</td>
-                  <td><?php echo $reservation->getDestination(); ?></td>
+                  <td><?php echo $destination; ?></td>
                 </tr>
                 <tr>
                   <td>Nombre de places</td>
-                  <td><?php echo $reservation->getNbr_places();?></td>
+                  <td><?php echo $nbr_places ?></td>
                 </tr>
 
                 <?php
-                
-                for ($i = 0; $i <$reservation->getNbr_places(); $i++)
+                for ($i = 0; $i <$nbr_places; $i++)
                 {
                   echo'
                   <tr>
                          <td>Nom</td>
-                         <td> '.$reservation->getName()[$i].' </td>
+                         <td> '.$names[$i].' </td>
                        </tr>
                        <tr>
                          <td>Age</td>
-                         <td> '.$reservation->getAge()[$i].'</td>
+                         <td> '.$ages[$i].'</td>
                        </tr>';
                 }
-                
                 ?>
                 <tr>
                   <td>Assurance annulation</td>
-                  <td> <?php if(isset($reservation)) echo $reservation->getAssurance(); ?></td>
+                  <td> <?php echo $assurance ?></td>
                 </tr>
               </table>
             <div>
