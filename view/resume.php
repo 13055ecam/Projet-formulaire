@@ -6,8 +6,10 @@
       </head>
 
       <body>
-          <center>
+        <center>
+
           <h1>VALIDATION DES RESERVATIONS</h1>
+
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <table>
                 <tr>
@@ -26,25 +28,27 @@
                   echo'
                   <tr>
                          <td>Nom</td>
-                         <td> '.$reservation->getName().' </td>
+                         <td> '.$reservation->getName()[$i].' </td>
                        </tr>
                        <tr>
                          <td>Age</td>
-                         <td> '.$reservation->getAge().'</td>
+                         <td> '.$reservation->getAge()[$i].'</td>
                        </tr>';
                 }
                 
                 ?>
                 <tr>
                   <td>Assurance annulation</td>
-                  <td> <?php if(!empty($reservation)) echo $reservation->getAssurance(); ?></td>
+                  <td> <?php if(isset($reservation)) echo $reservation->getAssurance(); ?></td>
                 </tr>
-                </form>
               </table>
-              <p> </p>
-              <input type="submit" name="check" value="Confirmer"/>
-              <input type="submit" name= "returntodetail" value = "Retour à la page précédente"/>
-              <input type="submit" name ="Cancel" value= "Annuler la réservation " />
-              </center>
+            <div>
+              <input type="submit" name="check"
+              value="Confirmer"/>
+              <input type="submit" name= "returntodetail "value="Retour à la page précédente"/>
+              <input type='submit' name='Cancel' value='Annuler la reservation'/>
+            </div>
+          </form>
+        </center>
       </body>
 </html>

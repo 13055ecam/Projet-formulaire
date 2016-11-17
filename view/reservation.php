@@ -29,12 +29,12 @@
         <br><br>
         Nombre de places : 
         <input type="text" name="nbr_places"  value="<?php if(isset($reservation)) echo $reservation->getNbr_places();?>" />
-              <br><br>
-        Assurance annulation
-        <input type="checkbox" name="assurance" value="<?php if(isset($reservation)) echo $reservation->getCheckbox()?>" checked/>
+                <br><br>
+            Assurance annulation:
+  <input type="checkbox" name="assurance" value="<?php if ($reservation->getAssurance() =='oui') echo "Checked";?>"
         <br><br>
-                <input type="submit" name ="Send" value= "Etape suivante"/>
-                <input type="submit" name ="Cancel" value= "Annuler la réservation"/>
+        <input type="submit" name ="send" value= "Etape suivante"/>
+        <input type="submit" name ="Cancel" value= "Annuler la réservation"/>
         </form>
     </body>
 </html>

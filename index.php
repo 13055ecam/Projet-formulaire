@@ -1,67 +1,63 @@
 <?php
+include ('model.php');
 session_start();
-//Include class definition
-include 'model.php';
-//Look opened reservation 
-if (isset($reservation))
-{
-  $reservation;
-}
-//Instanciation of a new object
+#Recuperation of a session
+if (isset($_SESSION["reservation"])&& !empty($_SESSION['reservation'])) {
+    $reservation = unserialize($_SESSION['reservation']);
+  } 
 else
-{
-  $reservation = new Reservation();
-  $_SESSION['reservation'] = $reservation;
-}
-//Page 1
-// on teste si nos variables sont définies
-if(isset($_POST["send"]))
+  {
+    $reservation = new Reservation();
+  }
+//Page 1 : Entre la destination, le nombre de client et l'assurance puis on va à la page 2. 
+if(!empty($_POST['Send']) && empty($_POST['Cancel']) && !empty($_POST["destination"]) && !empty($_POST['nbr_places']))
 {
   $reservation->setDestination($_POST['destination']);
   $reservation->setNbr_places($_POST['nbr_places']);
-  $reservation ->setAssurance($_POST['assurance']);
-  $nbr_places = $reservation->getNbr_places();
-  $destination = $reservation->getDestination();
-  $assurance = $reservation->getAssurance();
-  $_SESSION['destination'] = $destination;
-  $_SESSION['assurance'] = $assurance;
-  $_SESSION['nbr_places'] = $nbr_places;
-  include ('detail.php');
+   if (isset($_POST['assurance']))
+  {
+    $reservation->setCheckbox('checked');
+  }
+  else
+  {
+    $reservation->setCheckbox('');
+  }
+  include("detail.php");
 }
-if (isset($_POST["Cancel"])){
-  session_destroy();
-  session_start();
-  include("reservation.php");
-}
-if (isset($_POST["validation"])){
+//Retour à la première page 
+
+if (!empty($_POST["returntoreservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
+  {
+    include("reservation.php");
+  }
+// Entre les noms et les ages pour chaque personne et on va à la troisième page 
+if (isset($_POST["validation"]) && !empty($_POST["validation"]) && empty($_POST['returntoreservation']) && empty($_POST['Cancel']))
+  {
   $reservation->setAge($_POST['ages']);
   $reservation->setName($_POST['names']);
-  $names = $reservation->getName();
-  $ages = $reservation->getAge();
-  $_SESSION['names'] = $names;
-  $_SESSION['ages'] = $ages;
-  $destination=$_SESSION['destination'];
-  $assurance=$_SESSION['assurance'];
-  $nbr_places=$_SESSION['nbr_places'];
   include("resume.php");
-}
-if (isset($_POST["returntodetail"])){
-  $names = $_SESSION['names'];
-  $ages = $_SESSION['ages'];
-  $nbr_places=$_SESSION['nbr_places'];
+  }
+if (isset($_POST["returntodetail"])) 
+  {
   include ("detail.php");
-}
-if (isset($_POST["check"])){
-  $nbr_places=$_SESSION['nbr_places'];
+  }
+// Annulation de la réservation, on détruit la session
+if (!empty($_POST["Cancel"]) && isset($_POST["Cancel"]))
+  {
+    session_destroy();
+    unset($reservation);
+    include("reservation.php");
+  }
+if (!empty($_POST["check"]) && empty($_POST["Cancel"])&& empty($_POST["returntodetail"]))
+  {
   include("confirmation.php");
+  }
+if (isset($reservation))
+{
+  $_SESSION['reservation'] = serialize($reservation);
 }
-if (isset($_POST["return"])){
-  $destination=$_SESSION['destination'];
-  $assurance=$_SESSION['assurance'];
-  $nbr_places=$_SESSION['nbr_places'];
-  include("reservation.php");
-}
-if (!isset($_POST["return"])&&!isset($_POST["check"])&&!isset($_POST["returntodetail"])&&!isset($_POST["validation"])&&!isset($_POST["Cancel"])&&!isset($_POST["send"])){
-  include("reservation.php");
-}
+if(empty($_POST['nbr_places']) && empty($_POST["destination"]) && empty($_POST['nbr_places']) && empty($_POST["Send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["Cancel"]) && empty ($_POST["returntodetail"]))
+  {
+    include("reservation.php");
+  }
 ?>
