@@ -1,95 +1,161 @@
 <?php
+
 include ('model.php');
 session_start();
-#Recuperation of a session
-if (isset($_SESSION["reservation"])&& !empty($_SESSION['reservation'])) {
+
+
+/* Recuperation of a existing session */
+if (isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
+  {
     $reservation = unserialize($_SESSION['reservation']);
-  } 
+  }
 else
   {
     $reservation = new Reservation();
   }
 
-#si on appuit sur send
+/* Page one */
+if(!empty($_POST['send']) && empty($_POST['cancel']))
+  {
 
-if(!empty($_POST['Send']) && empty($_POST['Cancel']))
-{
-  #si rien en place et rien en destination et on valide
+
+    /* Press next with no values ​​in the boxes */ 
   if (empty($_POST["destination"]) && empty($_POST["nbr_places"]))
     { 
       $reservation->setDestinationError("Veuillez entrer une destination");
       $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-      include("reservation.php");
+      include("page_one.php");
     }
-    //retour en arrière
+
   elseif (!empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
   {
-    if ($_POST["nbr_places"] > 10)
+
+    /* Press next with too much traveler */
+    if ($_POST["nbr_places"] > 10 && !is_numeric($_POST["nbr_places"]))
       {
         $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
         $reservation->setDestination($_POST['destination']);
         $reservation->setNbr_places("");
         $reservation->setDestinationError("");
-        include("reservation.php");
+
+
+        /* Check whether insurance has been taken */
+        if (isset($_POST['insurance']))
+          {
+            $reservation->setCheckbox('checked');
+          }
+          else
+          {
+            $reservation->setCheckbox('');
+          }
+        include("page_one.php");
       }
+
     else
       {
         $reservation->setNbr_places($_POST["nbr_places"]);
         $reservation->setDestination($_POST['destination']);
         $reservation->setPlaceError("");
         $reservation->setDestinationError("");
-        include("detail.php");
-      }
+
+        if (isset($_POST['insurance']))
+          {
+            $reservation->setCheckbox('checked');
+          }
+          else
+          {
+            $reservation->setCheckbox('');
+          }
+      include("page_two.php");
+    }
   }
+
+  /* Destination box is empty */
   elseif (empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
     {
-      if ($_POST["nbr_places"] > 10)
+      if ($_POST["nbr_places"] > 10 && !is_numeric($_POST["nbr_places"]))
         {
           $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
           $reservation->setDestinationError("Veuillez entrer une destination");
           $reservation->setNbr_places("");
-          include("reservation.php");
+
+          if (isset($_POST['insurance']))
+          {
+            $reservation->setCheckbox('checked');
+          }
+          else
+          {
+            $reservation->setCheckbox('');
+          }
+        include("page_one.php");
         }
       else
       {
         $reservation->setDestinationError("Veuillez entrer une destination");
         $reservation->setNbr_places($_POST["nbr_places"]);
-        include("reservation.php");
+
+        if (isset($_POST['insurance']))
+          {
+            $reservation->setCheckbox('checked');
+          }
+          else
+          {
+            $reservation->setCheckbox('');
+        }
+        include("page_one.php");
       }
     }
+
   else
     {
+      if (isset($_POST['insurance']))
+      {
+      $reservation->setCheckbox('checked');
+      }
+      else
+    {
+      $reservation->setCheckbox('');
+    }
+
       $reservation->setDestination($_POST['destination']);
       $reservation->setNbr_places("");
       $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-      include("reservation.php");
+      include("page_one.php");
     }
-  }
-//Retour à la première page 
-if (!empty($_POST["returntoreservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
+}
+
+
+/* Back to the first page */ 
+if (!empty($_POST["return_to_reservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
   {
-    include("reservation.php");
+    include("page_one.php");
   }
-// Entre les noms et les ages pour chaque personne et on va à la troisième page 
-if (isset($_POST["validation"]) && !empty($_POST["validation"]) && empty($_POST['returntoreservation']) && empty($_POST['Cancel']))
+
+
+/* Page two */
+if (isset($_POST["validation"]) && !empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && empty($_POST['cancel']))
   {
-  if (empty($_POST["names"]) && empty($_POST["ages"]))
+
+
+  /*Names box and ages box are empties */
+  if (empty($_POST["names"]) && empty($_POST["ages"]) && $_POST["ages"]==[] && $_POST["names"]==[])
   {
     $reservation->setAgeError("Veuillez entrer un age supérieur à 0");
     $reservation->setNameError("Veuillez entrer un nom pour chaque personne");
-    $reservation->setAge("");
-    $reservation->setName("");
-    include("detail.php");
+    $reservation->setAge([]);
+    $reservation->setName([]);
+    include("page_two.php");
   }
-  elseif (!empty($_POST["names"]) && !empty($_POST["ages"]))
+
+  elseif (!empty($_POST["names"]) && !empty($_POST["ages"]) && $_POST["ages"]!=[] && $_POST["names"]!=[])
   {
     if ($_POST["ages"] < 0)
       {
         $reservation->setAgeError("Veuillez entrer un age supérieur à 0");
         $reservation->setName($_POST['names']);
-        $reservation->setAge("");
+        $reservation->setAge([]);
         $reservation->setNameError("");
-        include("detail.php");
+        include("page_two.php");
       }
     else
       {
@@ -97,60 +163,70 @@ if (isset($_POST["validation"]) && !empty($_POST["validation"]) && empty($_POST[
         $reservation->setName($_POST['names']);
         $reservation->setAgeError("");
         $reservation->setNameError("");
-        include("resume.php");
+        include("page_three.php");
       }
     }
 
-  elseif (empty($_POST["name"]) && !empty($_POST["ages"]))
+  elseif (empty($_POST["names"]) && !empty($_POST["ages"]) && $_POST["ages"]!=[] && $_POST["names"]==[])
   {
     if ($_POST["ages"] < 0)
       {
         $reservation->setAgeError("Veuillez entrer un age supérieur à 0");
         $reservation->setNameError("Veuillez entrer un nom pour chaque personne");
         $reservation->setName($_POST['names']);
-        $reservation->setAge("");
-        include("detail.php");
+        $reservation->setAge([]);
+        include("page_two.php");
       }
     else
       {
         $reservation->setNameError("Veuillez entrer un nom pour chaque personne");
         $reservation->setAge($_POST["ages"]);
-        include("resume.php");
+        include("page_three.php");
       }
   }
   else
     {
       $reservation->setName($_POST['names']);
-      $reservation->setAge("");
+      $reservation->setAge([]);
       $reservation->setAgeError("Veuillez entrer un age supérieur à 0");
-      include("detail.php");
+      include("page_two.php");
     }
   }
-//retour à la page détail
-if (isset($_POST["returntodetail"])) 
+
+
+/* Back to the second page */
+if (isset($_POST["return_to_detail"])) 
   {
-  include ("detail.php");
+  include ("page_two.php");
   }
-// Annulation de la réservation, on détruit la session
-if (!empty($_POST["Cancel"]) && isset($_POST["Cancel"]))
+
+
+/* Page Four */ 
+if (!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_detail"]))
+  {
+  include("page_four.php");
+  }
+
+
+/* Cancel reservation, destruction the session */
+if (!empty($_POST["cancel"]) && isset($_POST["cancel"]))
   {
     session_destroy();
     unset($reservation);
-    include("reservation.php");
+    include("page_one.php");
   }
-// aller à la dernière page 
-if (!empty($_POST["check"]) && empty($_POST["Cancel"])&& empty($_POST["returntodetail"]))
-  {
-  include("confirmation.php");
-  }
-//enrigistrer variable 
+
+
+/* Save session */
 if (isset($reservation))
 {
   $_SESSION['reservation'] = serialize($reservation);
 }
-//page par défaut 
-if(empty($_POST["Send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["Cancel"]) && empty ($_POST["returntodetail"]))
+
+
+/* Default page */
+if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["cancel"]) && empty ($_POST["return_to_detail"]) )
   {
-    include("reservation.php");
+    include("page_one.php");
   }
 ?>

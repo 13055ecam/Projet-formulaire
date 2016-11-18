@@ -1,23 +1,65 @@
-form {
+form 
+    {
     /* Pour le centrer dans la page */
-    margin: 0 auto;
-    width: 400px;
+    margin: 50px auto 0 auto;
+    width: 600px;
     /* Pour voir les limites du formulaire */
     padding: 1em;
-    border: 1px solid #CCC;
+    border: 3px solid #0EAAE2;
+    background-color: #FFFACD;
     border-radius: 1em;
-}
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
+    }
 
-div {
-    width : 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-th, td {
+table, th, td 
+    {
+    border: 3px solid #0EAAE2;
+    border-collapse: collapse;
+    background-color: white;
+    }
+
+#littleform
+    {
+    width: 300px;
+    /* Pour voir les limites du formulaire */
+    padding: 1em;
+    border: 1px solid #0EAAE2;
+    }
+#littleform2
+    {
+    width: 230px;
+    padding: 1em;
+    border: 1px solid #0EAAE2;
+    }
+#littleform2 label
+    {
+    display: block;
+    width: 75px;
+    float: left;
+    }
+
+label
+    {
+    display: block;
+    width: 150px;
+    float: left;
+    }
+
+th, td 
+    {
     padding: 5px;
+    }
+.error
+    {
+    color: red;
+    }
+
+h1 
+    {
+    color : #007FFF;
+    }
+#bouton input
+{
+    background-color: #0EAAE2;
+    border-radius: 1em;
+    color : white;
 }
-.error{color: red;}

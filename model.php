@@ -6,27 +6,26 @@ class Reservation
   private $nbr_places;
   private $names;
   private $ages;
-  private $assurance;
-  private $personnes;
   private $checkbox;
-  private $totalprice;
   private $destinationError;
   private $placeError;
   private $ageError;
   private $nameError;
+  private $totalprice;
 
-  public function __construct($nbr_places=0,$totalprice=0,$totalprice=0)
+  public function __construct($nbr_places="",$destination="",$names = [],$ages = [])
   {
     $this->destination = $destination;
     $this->nbr_places = $nbr_places;
-    $this->names = [];
-    $this->ages = [];
-    $this->destinationError = $destinationError;
-    $this->placeError = $placeError;
-    $this->nameError = $nameError;
-    $this->ageError = $ageError;
+    $this->names = $names;
+    $this->ages = $ages;
+    $this->destinationError = "";
+    $this->placeError = "";
+    $this->nameError = "";
+    $this->ageError = "";
+    $this->checkbox = "";
+    $this->totalprice = 0;
   }
-
   public function getDestination()
   {
     return $this->destination;
@@ -64,7 +63,7 @@ class Reservation
       $this->placeError = $placeError;
     }
 
-  public function getAssurance()
+  public function getInsurance()
   {
     if ($this->checkbox == 'checked')
     {
@@ -75,12 +74,13 @@ class Reservation
       return 'NON';
     }
   }
-  
+
   public function getName()
-  {
+  { 
+    //Add '' when the input is empty
     while (count($this->names) < $this->nbr_places)
     {
-      array_push($this->names, '');
+      array_push($this->names, "");
     }
     return $this->names;
   }
@@ -98,9 +98,10 @@ class Reservation
     }
    public function getAge()
   {
+    //Add '' when the input is empty, < 1, or not a number
     while (count($this->ages) < $this->nbr_places)
     {
-      array_push($this->ages, '');
+      array_push($this->ages, "");
     }
     return $this->ages;
   }
@@ -133,19 +134,25 @@ class Reservation
   }
   public function getPrice()
   {
-    if ($this->ages <= 12)
+    foreach ($this->ages as $ages)
+    {
+      if ($ages <= 12)
+        {
+          $this->totalprice += 10;
+        }
+      else
       {
-        $totalprice += 10;
+        $this->totalprice += 15;       
       }
-    else
-        $totalprice += 15;
-            
-    if ($this->checkbox == 'checked')
+    }
+      if ($this->checkbox = 'checked')
       {
-        return $totalprice  + 20;
+        return $this->totalprice + 20;
       }
-    else
-        return $totalprice;
+      else
+      {
+        return $this->totalprice + 0;
+      }
   }
 }
 ?>
