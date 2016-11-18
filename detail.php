@@ -10,25 +10,25 @@ error_reporting(0);
 
     </head>
     <body>
+        <form method ="post" action= "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <center> 
         <H1> Détail Reservation </H1>
         </center>
-        <form method ="post" action= "index.php">
         <?php 
                 for($i = 0; $i < $reservation->getNbr_places(); $i++) {
                         echo '
-                        <p>
-                        <span class="error">* '.$nomErr.'</span><br><br>
+                        <span class="error">-'.$reservation->getNameError().'</span>
+                        <br><br>
+                        <span class="error">-'.$reservation->getAgeError().'</span>
+                        <br><br>
                         Nom : 
-                        <input type= "text" name="names" value= "'.$reservation->getName().'"><br><br>
-                        <span class="error">* '.$ageErr.'</span>
+                        <input type= "text" name="names" value= "'.$reservation->getName()[$i].'">
                         <br><br>
                         Age :
-                        <input type= "text" name="ages" value= "'.$reservation->getAge().'" /><br><br>
-                        </p>';
+                        <input type= "text" name="ages" value= "'.$reservation->getAge()[$i].'" />
+                        <br><br>';
                        }
             ?>
-                  <br/><br/>
   				        <input type="submit" name ="validation" value= "Etape suivante" />
                   <input type="submit" name ="returntoreservation" value= "Retour à la page précédente" />
   				        <input type="submit" name ="Cancel" value= "Annuler la réservation" />

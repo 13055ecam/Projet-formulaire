@@ -21,16 +21,16 @@
 
                 <?php
                 
-                for ($i = 0; $i <$reservation->getNbr_places(); $i++)
+                for ($i = 0; $i < $reservation->getNbr_places(); $i++)
                 {
                   echo'
                   <tr>
                          <td>Nom</td>
-                         <td> '.$reservation->getName().' </td>
+                         <td> '.$reservation->getName()[$i].' </td>
                        </tr>
                        <tr>
                          <td>Age</td>
-                         <td> '.$reservation->getAge().'</td>
+                         <td> '.$reservation->getAge()[$i].'</td>
                        </tr>';
                 }
                 
