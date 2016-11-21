@@ -13,7 +13,7 @@
             <br/>
             <span class='error'>*<?php if(isset($reservation)) echo $reservation->getPlaceError();?></span>
             <br/>
-            <p> Le prix de la place est de 10 € jusqu'à 12 ans et ensuite de 15 ans.</p>
+            <p> Le prix de la place est de 10 € jusqu'à 12 ans et ensuite de 15 euros.</p>
 
             <p> Le prix d'assurance annulation est de 20 euros quels que soit le nombre de voyageurs.</p>
             <div id = 'little_form'>

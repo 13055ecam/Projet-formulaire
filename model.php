@@ -11,20 +11,18 @@ class Reservation
   private $placeError;
   private $ageError;
   private $nameError;
-  private $totalprice;
 
-  public function __construct($nbr_places="",$destination="",$names = [],$ages = [])
+  public function __construct($nbr_places= "",$destination="")
   {
     $this->destination = $destination;
     $this->nbr_places = $nbr_places;
-    $this->names = $names;
-    $this->ages = $ages;
+    $this->names = [];
+    $this->ages = [];
     $this->destinationError = "";
     $this->placeError = "";
     $this->nameError = "";
     $this->ageError = "";
     $this->checkbox = "";
-    $this->totalprice = 0;
   }
   public function getDestination()
   {
@@ -134,25 +132,24 @@ class Reservation
   }
   public function getPrice()
   {
+    $reservationPrice = 0;
     foreach ($this->ages as $ages)
     {
       if ($ages <= 12)
         {
-          $this->totalprice += 10;
+          $reservationPrice += 10;
         }
       else
       {
-        $this->totalprice += 15;       
+        $reservationPrice += 15;       
       }
     }
-      if ($this->checkbox = 'checked')
+    //return $reservationPrice;
+    if ( $this->checkbox == "checked")
       {
-        return $this->totalprice + 20;
+        return $reservationPrice + 20;
       }
-      else
-      {
-        return $this->totalprice + 0;
-      }
+        return $reservationPrice + 0;  
   }
 }
 ?>

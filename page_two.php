@@ -9,9 +9,9 @@
           <center> 
             <H1> Détail Reservation </H1>
           </center>
-          <span class="error">*<?php $reservation->getNameError()?></span>
+          <span class="error">*<?php if(isset($reservation)) echo $reservation->getNameError()?></span>
           </br>
-          <span class="error">*<?php $reservation->getAgeError()?></span>
+          <span class="error">*<?php if(isset($reservation)) echo $reservation->getAgeError()?></span>
           </br>
           </br>
           <div id = 'littleform2'>
