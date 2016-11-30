@@ -21,6 +21,7 @@
             <center>
               <div id = "bouton">
                 <input type='submit' name='cancel' value="Retour à la page d'accueil"/>
+                <input type='submit' name='booklist' value="afficher la liste des réservations"/>
               </div>
             </center>
         </form>

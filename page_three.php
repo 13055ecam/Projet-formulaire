@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="style.css">
       </head> 
       <body>
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
             <center>
               <h1>VALIDATION DES RESERVATIONS</h1>
               <table>
