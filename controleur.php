@@ -1,6 +1,8 @@
 <?php
-//session_start();
 include ('model.php');
+include('model2.php');
+
+
 
 /* Recuperation of a existing session */
 if (isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
@@ -166,13 +168,20 @@ if (isset($_POST["return_to_detail"]))
 if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_detail"]))
   {
   include("page_four.php");
+  $mysql = db::connectTodb('localhost','','');
+  db::choicedb($mysql,'test');
+  db::selectTable($mysql,'reservations');
+  db::addReservation(
+    $mysql,
+    'reservations',
+    $reservation->getName(),
+    $reservation->getDestination(),
+    $reservation->getAge(),
+    $reservation->getNbr_places(),
+    $reservation->getPrice(),
+    $reservation->getInsurance()
+    );
   }
-if(!empty($_POST["booklist"]) && isset($_POST["booklist"]))
-  {
-    include("gestionBD.php");
-    include('BD.php');
-  }
-
 
 /* Cancel reservation, destruction the session */
 if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))

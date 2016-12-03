@@ -152,22 +152,7 @@ class Reservation
         return $reservationPrice + 0;  
   }
 }
-class bbd
-{
-  public function __construct()
-  {
-    
-  }
-  public function UpdateTable()
-  {
 
-  }
-  public function DeleteTable()
-  {
 
-  }
-  public function ShowTable()
-  {
 
-  }
 ?>

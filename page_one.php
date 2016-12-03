@@ -18,7 +18,7 @@
             <p> Le prix d'assurance annulation est de 20 euros quels que soit le nombre de voyageurs.</p>
             <div id = 'little_form'>
                 <label>Destination :</label>
-                <input type="text" name="destination" value="<?php if(isset($reservation)) echo $reservation->getDestination();?>"/>
+                <input type="text" name="destination" value="<?php if(isset($reservation)){echo $reservation->getDestination();}?>"/>
                 <br/>
                 <label>Nombre de places : </label>
                 <input type="text" name="nbr_places"  value="<?php if(isset($reservation)) echo $reservation->getNbr_places();?>" />

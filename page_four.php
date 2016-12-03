@@ -13,7 +13,7 @@
             <?php 
               if (isset($reservation))
                 {
-                  echo $reservation->getPrice()."euros sur le compte 000-000000-00";
+                  echo $reservation->getPrice()." euros sur le compte 000-000000-00";
                 }
             ?>
             </p>
@@ -21,7 +21,6 @@
             <center>
               <div id = "bouton">
                 <input type='submit' name='cancel' value="Retour à la page d'accueil"/>
-                <input type='submit' name='booklist' value="afficher la liste des réservations"/>
               </div>
             </center>
         </form>

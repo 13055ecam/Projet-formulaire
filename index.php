@@ -2,13 +2,14 @@
 <?php
 session_start();
 
-if (!empty($_GET["controleur"]))
+if (!empty($_GET["name"]))
 {
-  echo 'index_'.$_GET["controleur"].'.php';
-    include 'index_'.$_GET["controleur"].'.php';
+    include $_GET["name"].'.php';
 }
 else
 {
   include 'controleur.php';
 }
+
+
 ?>
