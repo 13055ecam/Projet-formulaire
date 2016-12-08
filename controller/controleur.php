@@ -1,11 +1,10 @@
 <?php
-include ('model.php');
-include('model2.php');
-
-
+//include_once('../models/model_BD.php');
+//include_once('../models/model_reservation.php');
 
 /* Recuperation of a existing session */
-if (isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
+
+if(isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
   {
     $reservation = unserialize($_SESSION['reservation']);
   }
@@ -13,9 +12,6 @@ else
   {
     $reservation = new Reservation();
   }
-
-
-
 /* Page one */
 if(!empty($_POST['send']) && empty($_POST['cancel']))
   {
@@ -26,7 +22,7 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
     { 
       $reservation->setDestinationError("Veuillez entrer une destination");
       $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-      include("page_one.php");
+      include("../views/page_one.php");
     }
 
   elseif (!empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
@@ -46,7 +42,9 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
             }
             $reservation->setDestinationError('');
             $reservation->setPlaceError('');
-          include("page_two.php");
+
+          include("../views/page_two.php");
+
         }
 
     elseif (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10 && is_string($_POST["destination"]) && ($_POST["destination"]) !=0)
@@ -54,14 +52,14 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
           $reservation->setPlaceError("Veuillez entrer une destination");
           $reservation->setNbr_places($_POST["nbr_places"]);
           $reservation->setPlaceError('');
-          include("page_one.php");
+          include("../views/page_one.php");
          }
       else
         { 
           $reservation->setDestination($_POST['destination']);
           $reservation->setNameError('');
           $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-          include("page_one.php");
+          include("../views/page_one.php");
         }
     }
 
@@ -77,7 +75,7 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
         $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
       }
       $reservation->setDestinationError("Veuillez entrer une destination");
-      include("page_one.php");
+      include("../views/page_one.php");
     }
    else 
    {
@@ -91,14 +89,14 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
       $reservation->setDestinationError("Veuillez entrer une destination");
       }
       $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-      include("page_one.php");
+      include("../views/page_one.php");
     } 
   }
 
 /* Back to the first page */ 
 if (!empty($_POST["return_to_reservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
   {
-    include("page_one.php");
+    include("../views/page_one.php");
   }
 
 
@@ -129,30 +127,30 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
 
       if ($errorName == 0 && $errorAge ==0)
     {
-      include 'page_three.php';
+      include '../views/page_three.php';
     }
     else
     {
       if ($errorName !=0  &&  $errorAge ==0)
       {
         $reservation->setNameError('Veuillez entrer un nom pour chaque personne');
-        $reservation->setAge($_POST['ages']);
+        $reservation->setName($_POST['names']);
         $reservation->setAgeError('');
-        include 'page_two.php';
+        include '../views/page_two.php';
       }
       elseif ($errorName == 0 && $errorAge !=0)
       {
         $reservation->setAgeError('Veuillez entrer un age supérieur à 0');
         $reservation->setName($_POST['names']);
         $reservation->setNameError('');
-        include 'page_two.php';
+        include '../views/page_two.php';
       }
       /*Names box and ages box are empties */
       else
       {
       $reservation->setNameError('Veuillez entrer un nom pour chaque personne');
       $reservation->setAgeError('Veuillez entrer un age supérieur à 0');
-      include 'page_two.php';
+      include '../views/page_two.php';
       }
     }
     } 
@@ -160,18 +158,33 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
 /* Back to the second page */
 if (isset($_POST["return_to_detail"])) 
   {
-  include ("page_two.php");
+  include ("../views/page_two.php");
   }
 
 
 /* Page Four */ 
 if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_detail"]))
   {
-  include("page_four.php");
+        $reservation->setID($_POST['id']);
+
   $mysql = db::connectTodb('localhost','','');
   db::choicedb($mysql,'test');
   db::selectTable($mysql,'reservations');
-  db::addReservation(
+  if ($_POST['id'] != ""){
+    db::updateReservation(
+    $mysql,
+    'reservations',
+    $reservation->getName(),
+    $reservation->getDestination(),
+    $reservation->getAge(),
+    $reservation->getNbr_places(),
+    $reservation->getPrice(),
+    $reservation->getInsurance(),
+    $reservation->getID()
+    );
+  }
+  else{
+    db::addReservation(
     $mysql,
     'reservations',
     $reservation->getName(),
@@ -180,16 +193,25 @@ if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_
     $reservation->getNbr_places(),
     $reservation->getPrice(),
     $reservation->getInsurance()
-    );
+    );   
+  }
+  include("../views/page_four.php");
   }
 
 /* Cancel reservation, destruction the session */
 if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
-  {
-    session_destroy();
-    unset($reservation);
-    include("page_one.php");
-  }
+ {
+  session_destroy();
+  unset($reservation);
+  include("../views/page_one.php");
+ }
+
+ if(!empty($_POST["back_to_list"]) && isset($_POST["back_to_list"]))
+ {
+  session_destroy();
+  unset($reservation);
+  include("../views/liste_reservation.php");
+ }
 
 
 /* Save session */
@@ -198,10 +220,9 @@ if (isset($reservation))
   $_SESSION['reservation'] = serialize($reservation);
 }
 
-
 /* Default page */
-if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["cancel"]) && empty ($_POST["return_to_detail"])&& empty($_POST["booklist"]))
+if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["cancel"]) && empty ($_POST["return_to_detail"]) && empty($_POST['back_to_list']))
   {
-    include("page_one.php");
+    include('../views/page_one.php');
   }
 ?>

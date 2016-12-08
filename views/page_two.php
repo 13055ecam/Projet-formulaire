@@ -2,10 +2,10 @@
 <html>
     <head>
         <title>exo3</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="../views/style.css" />
     </head>
     <body>
-        <form method ="post" action= "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
+        <form method ="post" action= "index.php"/>
           <center> 
             <H1> Détail Reservation </H1>
           </center>
@@ -13,9 +13,8 @@
           </br>
           <span class="error">*<?php if(isset($reservation)) echo $reservation->getAgeError()?></span>
           </br>
-          </br>
           <div id = 'littleform2'>
-            <?php 
+            <?php
               for($i = 0; $i < $reservation->getNbr_places(); $i++) 
                 {
                   echo '
@@ -39,4 +38,3 @@
   	</form>
   </body>
 </html>
-

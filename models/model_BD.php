@@ -30,6 +30,18 @@ class db
     'assurance' => $insurance
     )));
   }
+  public static function updateReservation($mysql,$table,$names,$destination,$ages,$nombre,$price,$insurance,$line)
+  {
+    $add = $mysql->prepare("UPDATE $table set names = :noms, destination= :destination,ages=:ages, nombre_de_place = :nombre, prix = :prix,assurance=:assurance where id = $line");
+    $add->execute((array(
+    'noms' =>implode( ",",$names),
+    'destination' =>$destination,
+    'ages' => implode( ",",$ages),
+    'nombre' => $nombre,
+    'prix' =>$price,
+    'assurance' => $insurance
+    )));
+  }
   public static function removeRev($mysql,$table,$line)
   {
     $mysql->exec("DELETE FROM $table WHERE id=$line ") or exit(mysql_error());
@@ -37,6 +49,7 @@ class db
   public static function updateRev($mysql,$table,$line)
   {
   $data = $mysql->query("SELECT * FROM $table WHERE id=$line");
+  return($data);
   }
   public static function selectData($mysql,$table)
   {
@@ -44,19 +57,4 @@ class db
     return $data;
   }
 }
-  /*
-  public static function updateRev($mysql,$table,$line,$names,$destination,$ages,$nombre,$price,$insurance)
-  {
-    $update=$mysql->prepare("UPDATE $table SET noms = :nvnoms, destination= :nvdestination, ages = :nvages, nombre_de_place = :nvNbr_place, prix = nvprix, assurance = nvassurance WHERE id = $line");
-      $update->$add->execute((array(
-      'noms' =>implode( ",",$names),
-      'destination' =>$destination,
-      'ages' => implode( ",",$ages),
-      'nombre' => $nombre,
-      'prix' =>$price,
-      'assurance' => $insurance
-      )));
-  }
-  */
-  
 ?>

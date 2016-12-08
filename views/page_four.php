@@ -1,10 +1,10 @@
 <html>
       <head>
         <title>Reservation</title>
-        <link rel="stylesheet" type="text/css" href='style.css'>
+        <link rel="stylesheet" type="text/css" href="../views/style.css">
       </head>
       <body>
-        <form method='post' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
+        <form method='post' action="index.php"/>
           <center>
             <h1>Confirmation des réservations</h1>
           </center>
@@ -21,6 +21,7 @@
             <center>
               <div id = "bouton">
                 <input type='submit' name='cancel' value="Retour à la page d'accueil"/>
+                <input type='submit' name='back_to_list' value="Retour à la liste"/>
               </div>
             </center>
         </form>

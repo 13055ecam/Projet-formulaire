@@ -11,10 +11,12 @@ class Reservation
   private $placeError;
   private $ageError;
   private $nameError;
+  private $id;
 
-  public function __construct($nbr_places= "",$destination="")
+  public function __construct($nbr_places= "",$destination="",$id = "")
   {
     $this->destination = $destination;
+    $this->id=$id;
     $this->nbr_places = $nbr_places;
     $this->names = [];
     $this->ages = [];
@@ -32,7 +34,14 @@ class Reservation
   {
     $this->destination = $newdestination;
   }
-
+  public function getID()
+  {
+    return $this->id;
+  }
+  public function setId($newid)
+  {
+    $this->id = $newid;
+  }
   public function getDestinationError()
     {
       return $this->destinationError;
