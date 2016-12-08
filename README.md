@@ -1,5 +1,4 @@
 # Projet-formulaire
-
 Tested with a MAC (XAMPP)
 
 Warning ! You have to create a folder("foldername") to put all inside.
