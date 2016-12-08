@@ -17,7 +17,7 @@ foreach($result as $row)
     $modif = "Modify_".$id;
     $delete = "Delete_".$id;
 
-   if(!empty($_POST[$modif]))
+   if(isset($_POST[$modif]))
    {
         session_start();
         $reservation = new reservation();
@@ -53,10 +53,12 @@ foreach($result as $row)
     {
         include ('index.php');
     }
-    elseif(empty($_POST['addReservation'])&& !isset($_POST[$delete]) && !isset($_POST[$modif])) 
+    elseif(empty($_POST['addReservation']) && !isset($delete) && !isset($modif))
     {
-      $result = db::selectData($mysql,'reservations');
-      $colcount = $result->columnCount();
+      include('../views/liste_reservation.php');
+    }
+    elseif(empty($_POST['addReservation']) && !isset($_POST[$delete]) && !isset($_POST[$modif]))
+    {
       include('../views/liste_reservation.php');
     }
 }
