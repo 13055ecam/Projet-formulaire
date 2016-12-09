@@ -6,6 +6,7 @@ Tested with a MAC (XAMPP)
 3. Open a browser and enter one of these URLS in your address bar : 
 
 => To book a reservation -> http://localhost/"foldername"/controller/index.php
+
 => To see the database -> http://localhost/"folderename"/controller/controller_BD.php 
 
    
