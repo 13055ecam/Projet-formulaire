@@ -1,9 +1,9 @@
 <?php
+
 include_once('../models/model_DB.php');
 include_once('../models/model_reservation.php');
 
 /* Recuperation of a existing session */
-
 if(isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
   {
     $reservation = unserialize($_SESSION['reservation']);
@@ -12,12 +12,12 @@ else
   {
     $reservation = new Reservation();
   }
+
 /* Page one */
 if(!empty($_POST['send']) && empty($_POST['cancel']))
   {
 
-
-    /* Press next with no values ​​in the boxes */ 
+  /* Press next with no values in the boxes */ 
   if (empty($_POST["destination"]) && empty ($_POST["nbr_places"]))
     { 
       $reservation->setDestinationError("Veuillez entrer une destination");
@@ -29,7 +29,7 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
   {
     $reservation->setNbr_places($_POST["nbr_places"]);
     $reservation->setDestination($_POST['destination']);
-
+    
     if (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10 && !is_numeric($_POST["destination"]))
       {
         if (isset($_POST['insurance']))
