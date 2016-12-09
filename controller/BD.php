@@ -45,7 +45,7 @@ foreach($result as $row)
     elseif (isset($_POST[$delete]))
     {
         db::removeRev($mysql,'reservations',$id);
-        include('../views/liste_reservation.php');
+        include('../views/bookslist.php');
     }
   }
   //add a new reservation
@@ -55,11 +55,11 @@ foreach($result as $row)
     }
     elseif(empty($_POST['addReservation']) && !isset($delete) && !isset($modif))
     {
-      include('../views/liste_reservation.php');
+      include('../views/bookslist.php');
     }
     elseif(empty($_POST['addReservation']) && !isset($_POST[$delete]) && !isset($_POST[$modif]))
     {
-      include('../views/liste_reservation.php');
+      include('../views/bookslist.php');
     }
 }
 catch(Exception $e)
