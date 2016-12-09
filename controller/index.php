@@ -11,7 +11,11 @@ if (!empty($_GET["name"]))
 }
 else
 {
+<<<<<<< HEAD
   include 'controller_reservation.php';
+=======
+  include 'controleur_reservation.php';
+>>>>>>> ef6e8feaf94e0b755e412be0294f8dd22e39dfc8
 }
 
 ?>
