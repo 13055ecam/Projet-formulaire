@@ -1,13 +1,15 @@
 # Projet-formulaire
 Tested with a MAC (XAMPP)
 
-Warning ! You have to create a folder("foldername") to put all inside.
+1. Download the project 
+2. Unzip the folder to /Applications/XAMPP/xamppfiles/htdocs
+3. Open a browser and enter one of these URLS in your address bar : 
 
-Don't forget to place it in your localhost folder !
+=> To book a reservation -> http://localhost/"foldername"/controller/index.php
+   In this page, you can fill the form to book a trip.
 
-
-To book a reservation -> http://localhost/"foldername"/controller/index.php
-
-To see the database -> http://localhost/"folderename"/controller/controller_BD.php
-
+=> To see the database -> http://localhost/"folderename"/controller/controller_BD.php
+   In this page, you can see all bookings saved in the database. You can edit or delete a booking.
+   
+   
 
