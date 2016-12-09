@@ -1,5 +1,5 @@
 <?php
-include_once('../models/model_BD.php');
+include_once('../models/model_DB.php');
 include_once('../models/model_reservation.php');
 
 /* Recuperation of a existing session */
@@ -210,7 +210,7 @@ if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
  {
   session_destroy();
   unset($reservation);
-  include("../views/liste_reservation.php");
+  include("../views/bookingslist.php");
  }
 
 

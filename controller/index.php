@@ -1,6 +1,5 @@
 <?php
 
-
 if(!isset($_SESSION['reservation']))
 {
     session_start();
@@ -12,6 +11,7 @@ if (!empty($_GET["name"]))
 }
 else
 {
-  include 'controleur.php';
+  include 'controller_reservation.php';
 }
+
 ?>

@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="../views/style.css">
     </head>
     <body>
-        <form method ="POST" action="BD.php"/>
+        <form method ="POST" action="controller_DB.php"/>
             <center>
                 <H1>Liste des réservations</H1>
             </center>

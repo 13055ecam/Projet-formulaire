@@ -1,6 +1,6 @@
 <?php
 
-include_once('../models/model_BD.php');
+include_once('../models/model_DB.php');
 include_once('../models/model_reservation.php');
 $hostname = 'localhost';
 $username = '';
@@ -45,7 +45,7 @@ foreach($result as $row)
     elseif (isset($_POST[$delete]))
     {
         db::removeRev($mysql,'reservations',$id);
-        include('../views/liste_reservation.php');
+        include('../views/bookingslist.php');
     }
   }
   //add a new reservation
@@ -55,11 +55,11 @@ foreach($result as $row)
     }
     elseif(empty($_POST['addReservation']) && !isset($delete) && !isset($modif))
     {
-      include('../views/liste_reservation.php');
+      include('../views/bookingslist.php');
     }
     elseif(empty($_POST['addReservation']) && !isset($_POST[$delete]) && !isset($_POST[$modif]))
     {
-      include('../views/liste_reservation.php');
+      include('../views/bookingslist.php');
     }
 }
 catch(Exception $e)
