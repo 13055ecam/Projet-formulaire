@@ -210,7 +210,7 @@ if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
  {
   session_destroy();
   unset($reservation);
-  include("../views/liste_reservation.php");
+  include("../views/bookingslist.php");
  }
 
 
