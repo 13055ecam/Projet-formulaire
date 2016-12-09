@@ -8,6 +8,6 @@ Don't forget to place it in your localhost folder !
 
 To book a reservation -> http://localhost/"foldername"/controller/index.php
 
-To see the database -> http://localhost/"folderename"/controller/BD.php
+To see the database -> http://localhost/"folderename"/controller/controller_BD.php
 
 
