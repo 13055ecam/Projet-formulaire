@@ -26,7 +26,7 @@
                 <label>Assurance annulation</label>
                 <input type="checkbox" name="insurance" value="<?php if(isset($reservation)) echo $reservation->getCheckbox();?>"/>
             </div>
-                </br>
+            </br>
             <center>
                 <div id = "bouton">
                     <input type="submit" name ="send" value= "Etape suivante"/>

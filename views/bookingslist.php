@@ -18,6 +18,7 @@
                     db::selectTable($mysql,'reservations');
                     $result = db::selectData($mysql,'reservations');
                     $colcount = $result->columnCount();
+
                     // Get coluumn headers
                     echo ('<center><table><tr>');
                     for ($i = 0; $i < $colcount; $i++)
@@ -28,6 +29,7 @@
                     echo('<th>' . 'Editer' . '</th>');
                     echo('<th>' . 'Supprimer' . '</th>');
                     echo('</tr>');
+                    
                     // Get row data
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) 
                     {

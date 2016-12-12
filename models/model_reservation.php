@@ -26,26 +26,32 @@ class Reservation
     $this->ageError = "";
     $this->checkbox = "";
   }
+
   public function getDestination()
   {
     return $this->destination;
   }
+
   public function setDestination($newdestination)
   {
     $this->destination = $newdestination;
   }
+
   public function getID()
   {
     return $this->id;
   }
+
   public function setId($newid)
   {
     $this->id = $newid;
   }
+
   public function getDestinationError()
     {
       return $this->destinationError;
     }
+
   public function setDestinationError($destinationError)
     {
       $this->destinationError = $destinationError;
@@ -65,6 +71,7 @@ class Reservation
     {
       return $this->placeError;
     }
+
   public function setPlaceError($placeError)
     {
       $this->placeError = $placeError;
@@ -91,19 +98,23 @@ class Reservation
     }
     return $this->names;
   }
+
   public function setName($newname)
   {
     $this->names = $newname;
   }
+
   public function getNameError()
     {
       return $this->nameError;
     }
+
   public function setNameError($nameError)
     {
       $this->nameError = $nameError;
     }
-   public function getAge()
+
+  public function getAge()
   {
     //Add '' when the input is empty, < 1, or not a number
     while (count($this->ages) < $this->nbr_places)
@@ -112,22 +123,27 @@ class Reservation
     }
     return $this->ages;
   }
+
   public function setAge($newage)
   {
     $this->ages = $newage;
   }
+
   public function getAgeError()
     {
       return $this->ageError;
     }
+
   public function setAgeError($ageError)
     {
       $this->ageError = $ageError;
     } 
+
    public function getCheckbox()
   {
     return $this->checkbox;
   }
+
   public function setCheckbox($newvaleur)
   {
     if ($newvaleur == 'checked')
@@ -139,6 +155,7 @@ class Reservation
       $this->checkbox = '';
     }
   }
+
   public function getPrice()
   {
     $reservationPrice = 0;
@@ -153,7 +170,6 @@ class Reservation
         $reservationPrice += 15;       
       }
     }
-    //return $reservationPrice;
     if ( $this->checkbox == "checked")
       {
         return $reservationPrice + 20;
@@ -161,7 +177,5 @@ class Reservation
         return $reservationPrice + 0;  
   }
 }
-
-
 
 ?>

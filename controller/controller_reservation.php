@@ -3,7 +3,8 @@
 include_once('../models/model_DB.php');
 include_once('../models/model_reservation.php');
 
-/* Recuperation of a existing session */
+
+/* Recuperation of a existing session or creation of a new session if not exists */
 if(isset($_SESSION["reservation"]) && !empty($_SESSION['reservation']))
   {
     $reservation = unserialize($_SESSION['reservation']);
@@ -13,11 +14,12 @@ else
     $reservation = new Reservation();
   }
 
-/* Page one */
+
+/* The first page */
 if(!empty($_POST['send']) && empty($_POST['cancel']))
   {
 
-  /* Press next with no values in the boxes */ 
+  /* Pressing on next with no values in the boxes */ 
   if (empty($_POST["destination"]) && empty ($_POST["nbr_places"]))
     { 
       $reservation->setDestinationError("Veuillez entrer une destination");
@@ -25,67 +27,84 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
       include("../views/page_one.php");
     }
 
+  /* Pressing on next with values in the boxes */ 
   elseif (!empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
   {
-    
+
+    /* Checking if the number of place and the destination respected the conditions */
+
+    /* All is respected */
     if (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10 && !is_numeric($_POST["destination"]))
       {
         if (isset($_POST['insurance']))
-            {
-              $reservation->setCheckbox('checked');
-            }
-            else
-            {
-              $reservation->setCheckbox('');
-            }
-            $reservation->setNbr_places($_POST["nbr_places"]);
-            $reservation->setDestination($_POST['destination']);
-            $reservation->setDestinationError('');
-            $reservation->setPlaceError('');
-            include("../views/page_two.php");
+          {
+            $reservation->setCheckbox('checked');
+          }
+        else
+          {
+            $reservation->setCheckbox('');
+          }
 
+        $reservation->setNbr_places($_POST["nbr_places"]);
+        $reservation->setDestination($_POST['destination']);
+        $reservation->setDestinationError('');
+        $reservation->setPlaceError('');
+
+        include("../views/page_two.php");
       }
 
-      elseif (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10 && is_numeric($_POST["destination"]))
-        {
-          $reservation->setDestinationError("Veuillez entrer une destination");
-          $reservation->setNbr_places($_POST["nbr_places"]);
-          $reservation->setDestination("");
-          $reservation->setPlaceError('');
-          include("../views/page_one.php");
-         }
-      else
-        { 
-          $reservation->setDestinationError("Veuillez entrer une destination");
-          $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
-          include("../views/page_one.php");
-        }
-    }
+    /* Destination isn't correct */
+    elseif (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10 && is_numeric($_POST["destination"]))
+      {
+        $reservation->setDestinationError("Veuillez entrer une destination");
+        $reservation->setNbr_places($_POST["nbr_places"]);
+        $reservation->setDestination("");
+        $reservation->setPlaceError('');
+        include("../views/page_one.php");
+      }
+    else
+      { 
+        $reservation->setDestinationError("Veuillez entrer une destination");
+        $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
+        include("../views/page_one.php");
+      }
+  }
 
-    elseif (empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
+  /* Checking if the number of place is correct. Destination is empty */
+  elseif (empty($_POST["destination"]) && !empty($_POST["nbr_places"]))
     { 
+
+      /* The number of place is respected */
       if (is_numeric($_POST["nbr_places"]) && $_POST["nbr_places"] < 10)
       {
         $reservation->setPlaceError('');
         $reservation->setNbr_places($_POST["nbr_places"]);
       }
+
+      /* The number of place isn't respected */
       else
       {
         $reservation->setPlaceError("Veuillez rentrer un nombre supérieur à 0 et inférieur à 10");
       }
+
       $reservation->setDestinationError("Veuillez entrer une destination");
       $reservation->setDestination("");
       include("../views/page_one.php");
     }
 
-   else
+  /* Checking if Destination is respected. The number of place is empty. */
+  else
    {
+
+    /* Destination is correct */
     if (!is_numeric($_POST["destination"]))
       {
         $reservation->setdestinationError('');
         $reservation->setDestination($_POST['destination']);
         $reservation->setAge(0);
       }
+
+    /* Destination isn't correct */  
     else
       {
       $reservation->setDestinationError("Veuillez entrer une destination");
@@ -95,6 +114,7 @@ if(!empty($_POST['send']) && empty($_POST['cancel']))
     } 
   }
 
+
 /* Back to the first page */ 
 if (!empty($_POST["return_to_reservation"])&& !empty($_POST['nbr_places']) && !empty($_POST["destination"]) && !empty($_POST['send']))
   {
@@ -102,9 +122,10 @@ if (!empty($_POST["return_to_reservation"])&& !empty($_POST['nbr_places']) && !e
   }
 
 
-/* Page two */
+/* Second page */
 if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && empty($_POST['cancel']))
   {
+
     if (isset($_POST["ages"]) &&  isset($_POST["names"])) 
     {
       $reservation->setName($_POST['names']);
@@ -112,13 +133,14 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
       $errorName = 0;
       $errorAge = 0;
 
-        foreach ($reservation->getName() as $inputName)
+      foreach ($reservation->getName() as $inputName)
         {
           if ($inputName == ''|| is_numeric($inputName))
-          {
-            $errorName +=1;
-          }
+            {
+              $errorName +=1;
+            }
         }
+
       foreach ($reservation->getAge() as $inputAge)
         {
           if ($inputAge == '' || !is_numeric($inputAge) || $inputAge <=0)
@@ -127,6 +149,7 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
             }
         } 
 
+      /* All is respected */
       if ($errorName == 0 && $errorAge ==0)
         {
           $reservation->setName($_POST['names']);
@@ -135,6 +158,8 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
           $reservation->setNameError('');
           include '../views/page_three.php';
         }
+
+      /* Name isn't respected */
       elseif ($errorName !=0  &&  $errorAge ==0)
         {
           $reservation->setNameError('Veuillez entrer un nom pour chaque personne');
@@ -143,6 +168,8 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
           $reservation->setAgeError('');
           include '../views/page_two.php';
         }
+
+      /* Age isn't respected */
       elseif ($errorName ==0 && $errorAge !=0)
         {
           $reservation->setAgeError('Veuillez entrer un age supérieur à 0');
@@ -152,7 +179,7 @@ if (!empty($_POST["validation"]) && empty($_POST['return_to_reservation']) && em
           include '../views/page_two.php';
         }
 
-      /*Names box and ages box are empties */
+      /* Names boxes and ages boxes are empties */
       else
         {
         $reservation->setNameError('Veuillez entrer un nom pour chaque personne');
@@ -169,13 +196,21 @@ if (isset($_POST["return_to_detail"]))
 
   }
 
-/* Page Four */ 
+/* Page Four */
 if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_detail"]))
   {
     $reservation->setID($_POST['id']);
+
+    /*Connexion with the database */
     $mysql = db::connectTodb('localhost','','');
+
+    /*Create a database if not exists */
     db::choicedb($mysql,'test');
+
+    /*Create a table if not exists */
     db::selectTable($mysql,'reservations');
+
+    /* Updating a reservation */
     if ($_POST['id'] != "")
       {
         db::updateReservation(
@@ -189,6 +224,8 @@ if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_
         $reservation->getInsurance(),
         $reservation->getID());
       }
+    
+    /* Addition of a reservation in the database */
     else
       {
         db::addReservation(
@@ -202,10 +239,12 @@ if(!empty($_POST["check"]) && empty($_POST["cancel"])&& empty($_POST["return_to_
         $reservation->getInsurance()
         );   
       }
+
     include("../views/page_four.php");
   }
 
-/* Cancel reservation, destruction the session */
+
+/* Canceling a reservation and destruction of the session */
 if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
  {
   session_destroy();
@@ -213,6 +252,8 @@ if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
   include("../views/page_one.php");
  }
 
+
+/* Go to Database */
  if(!empty($_POST["back_to_list"]) && isset($_POST["back_to_list"]))
  {
   session_destroy();
@@ -221,7 +262,7 @@ if(!empty($_POST["cancel"]) && isset($_POST["cancel"]))
  }
 
 
-/* Save session */
+/* Save a session */
 if (isset($reservation))
 {
   $_SESSION['reservation'] = serialize($reservation);
@@ -232,4 +273,5 @@ if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]
   {
     include('../views/page_one.php');
   }
+
 ?>

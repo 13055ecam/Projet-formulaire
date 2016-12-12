@@ -8,16 +8,16 @@ $username = '';
 $password = '';
 try
 {
-    /*Connection to DB*/
+    /* Connection to DB */
     $mysql = db::connectTodb($hostname,$username,$password);
     
-    /*Creation of a DB 'test' if not exists*/
+    /* Creation of a DB 'test' if not exists */
     db::choicedb($mysql,'test');
     
-    /*Creation of a table 'reservation' if not exists*/
+    /* Creation of a table 'reservation' if not exists */
     db::selectTable($mysql,'reservations');
     
-    /*Selection of all datas in the table*/
+    /* Selection of all datas in the table */
     $result = db::selectData($mysql,'reservations');
     foreach($result as $row)
     {
@@ -25,15 +25,15 @@ try
         $modif = "Modify_".$id;
         $delete = "Delete_".$id;
           
-      /*Editing of a booking in the database*/
+      /* Editing of a booking in the database */
        if(isset($_POST[$modif]))
        {
            
-            /*Starting of a session and addition of a booking in the session.*/
+            /* Starting of a session and addition of a booking in the session.*/
             session_start();
             $reservation = new reservation();
             $_SESSION['reservation'] = $reservation;
-            $result = db::updateRev($mysql,'reservations',$id); 
+            $result = db::selectRow($mysql,'reservations',$id); 
            
             foreach  ($result as $row)
             { 
@@ -48,7 +48,8 @@ try
               else
               {
                 $reservation->setCheckbox("");
-              } 
+              }
+               
               $reservation->setName(explode(",",$row['names']));
               $reservation->setAge(explode(",",$row['ages']));
               $_SESSION['reservation'] = serialize($reservation);
@@ -56,16 +57,16 @@ try
             include('index.php');
         }
           
-        /*deleting of a booking of the database*/
+        /* deleting of a booking of the database */
         elseif (isset($_POST[$delete]))
         {
-            db::removeRev($mysql,'reservations',$id);
+            db::removeReservation($mysql,'reservations',$id);
             include('../views/bookingslist.php');
         }
         
       }
     
-        /*Addition of a new booking*/
+        /* Addition of a new booking */
         if (!empty($_POST['addReservation']))
         {
             include ('index.php');
@@ -75,7 +76,7 @@ try
           include('../views/bookingslist.php');
         }
     
-        /*Nothing in the database*/
+        /* Nothing in the database */
         elseif(empty($_POST['addReservation']) && !isset($_POST[$delete]) && !isset($_POST[$modif]))
         {
           include('../views/bookingslist.php');

@@ -24,12 +24,14 @@ table, th, td
     padding: 1em;
     border: 1px solid #0EAAE2;
     }
+    
 #littleform2
     {
     width: 230px;
     padding: 1em;
     border: 1px solid #0EAAE2;
     }
+
 #littleform2 label
     {
     display: block;
@@ -48,6 +50,7 @@ th, td
     {
     padding: 5px;
     }
+
 .error
     {
     color: red;
@@ -57,6 +60,7 @@ h1
     {
     color : #007FFF;
     }
+
 #bouton input
 {
     background-color: #0EAAE2;

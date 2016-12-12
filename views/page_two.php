@@ -35,6 +35,6 @@
         			<input type="submit" name ="cancel" value= "Annuler la réservation" />
             </div>
           </center>
-  	</form>
-  </body>
+  	   </form>
+    </body>
 </html>
