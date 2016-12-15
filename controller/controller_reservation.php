@@ -269,7 +269,8 @@ if (isset($reservation))
 }
 
 /* Default page */
-if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["cancel"]) && empty ($_POST["return_to_detail"]) && empty($_POST['back_to_list']))
+if(empty($_POST["send"]) && empty($_POST["validation"]) && empty($_POST["check"]) && empty($_POST["cancel"]) && 
+   empty ($_POST["return_to_detail"]) && empty($_POST['back_to_list']))
   {
     include('../views/page_one.php');
   }
