@@ -9,6 +9,5 @@ Tested with a MAC (XAMPP)
 
 - To see and manage the database -> http://localhost/"YourFolder"/controller/index.php?name=controller_DB 
 
-  
-   
+Contact : 13055@ecam.be
 
