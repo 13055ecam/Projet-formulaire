@@ -1,4 +1,3 @@
-model_reservation.php
 <?php
 
 class Reservation
