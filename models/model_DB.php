@@ -1,5 +1,3 @@
-<!-- model_DB.php-->
-
 <?php
 
 class db
