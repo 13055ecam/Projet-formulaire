@@ -1,5 +1,3 @@
-<!-- page_three.html-->
-
 <!DOCTYPE html>
 <html>
   <head>
