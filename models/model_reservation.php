@@ -177,8 +177,7 @@ class Reservation
         return $reservationPrice + 20;
       }
         return $reservationPrice + 0;  
-  }
-  
+    } 
 }
 
 ?>
