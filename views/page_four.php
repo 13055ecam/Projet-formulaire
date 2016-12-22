@@ -1,5 +1,3 @@
-<!-- page_four.html-->
-
 <html>
   <head>
     <title>Reservation</title>
