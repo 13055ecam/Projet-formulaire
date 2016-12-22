@@ -1,6 +1,4 @@
-<!-- controller_reservation.php -->
-
- <?php
+<?php
 
 include_once "../models/model_DB.php";
 include_once "../models/model_reservation.php";
