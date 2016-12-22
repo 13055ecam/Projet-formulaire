@@ -7,7 +7,7 @@ Tested with a MAC (XAMPP)
 
 => To book a reservation -> http://localhost/"foldername"/controller/index.php
 
-=> To see the database -> http://localhost/"folderename"/controller/index.php?name=controller_BD.php 
+=> To see the database -> http://localhost/"folderename"/controller/index.php?name=controller_DB 
 
    
    
