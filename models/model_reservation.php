@@ -1,3 +1,4 @@
+model_reservation.php
 <?php
 
 class Reservation
@@ -13,7 +14,8 @@ class Reservation
   private $nameError;
   private $id;
 
-  public function __construct($nbr_places= "",$destination="",$id = "")
+
+  public function __construct($nbr_places= "", $destination="", $id = "")
   {
     $this->destination = $destination;
     $this->id=$id;
@@ -48,14 +50,14 @@ class Reservation
   }
 
   public function getDestinationError()
-    {
-      return $this->destinationError;
-    }
+  {
+    return $this->destinationError;
+  }
 
   public function setDestinationError($destinationError)
-    {
-      $this->destinationError = $destinationError;
-    }
+  {
+    $this->destinationError = $destinationError;
+  }
 
   public function getNbr_places()
   {
@@ -68,14 +70,14 @@ class Reservation
   }
 
   public function getPlaceError()
-    {
-      return $this->placeError;
-    }
+  {
+    return $this->placeError;
+  }
 
   public function setPlaceError($placeError)
-    {
-      $this->placeError = $placeError;
-    }
+  {
+    $this->placeError = $placeError;
+  }
 
   public function getInsurance()
   {
@@ -105,18 +107,17 @@ class Reservation
   }
 
   public function getNameError()
-    {
-      return $this->nameError;
-    }
+  {
+    return $this->nameError;
+  }
 
   public function setNameError($nameError)
-    {
-      $this->nameError = $nameError;
-    }
+  {
+    $this->nameError = $nameError;
+  }
 
   public function getAge()
   {
-    //Add '' when the input is empty, < 1, or not a number
     while (count($this->ages) < $this->nbr_places)
     {
       array_push($this->ages, "");
@@ -130,16 +131,16 @@ class Reservation
   }
 
   public function getAgeError()
-    {
-      return $this->ageError;
-    }
+  {
+    return $this->ageError;
+  }
 
   public function setAgeError($ageError)
-    {
-      $this->ageError = $ageError;
-    } 
+  {
+    $this->ageError = $ageError;
+  } 
 
-   public function getCheckbox()
+  public function getCheckbox()
   {
     return $this->checkbox;
   }
@@ -159,6 +160,7 @@ class Reservation
   public function getPrice()
   {
     $reservationPrice = 0;
+
     foreach ($this->ages as $ages)
     {
       if ($ages <= 12)
@@ -170,12 +172,14 @@ class Reservation
         $reservationPrice += 15;       
       }
     }
+
     if ( $this->checkbox == "checked")
       {
         return $reservationPrice + 20;
       }
         return $reservationPrice + 0;  
   }
+  
 }
 
 ?>
