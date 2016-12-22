@@ -1,5 +1,3 @@
-<!-- index.pdf-->
-
 <?php
 
 if (!isset($_SESSION['reservation']))
