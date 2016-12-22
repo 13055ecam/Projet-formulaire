@@ -1,4 +1,3 @@
-
 <?php
 
 include_once "../models/model_DB.php";
