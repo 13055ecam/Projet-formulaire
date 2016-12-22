@@ -1,5 +1,3 @@
-<!-- bookingslist.html-->
-
 <!DOCTYPE html>
 <html>
     <head>
