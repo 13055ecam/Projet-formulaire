@@ -1,6 +1,4 @@
-<!-- page_two.html-->
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>exo3</title>
